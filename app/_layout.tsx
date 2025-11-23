@@ -1,24 +1,27 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import '@/i18n';
+import { useThemeStore } from '@/theme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+import { useEffect } from 'react';
+import { Appearance, useColorScheme } from 'react-native';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const { isSystemMode, setThemeBySystem } = useThemeStore();
+  const systemTheme = useColorScheme();
 
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+  useEffect(() => {
+    // Слушатель системной темы: если нет сохранённого выбора, подстраиваемся
+    const subscription = Appearance.addChangeListener(({ colorScheme }) => {
+      AsyncStorage.getItem('theme-storage').then(() => {
+        if (isSystemMode) {
+          // Если пользователь не выбирал вручную
+          setThemeBySystem((colorScheme as 'light' | 'dark') || 'light');
+        }
+      });
+    });
+
+    return () => subscription.remove();
+  }, [isSystemMode, setThemeBySystem, systemTheme]);
+
+  return <Stack />;
 }
