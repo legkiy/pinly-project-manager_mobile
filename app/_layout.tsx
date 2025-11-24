@@ -1,4 +1,5 @@
 import '@/i18n';
+import { createThemeStyles } from '@/shared/lib';
 import { useThemeStore } from '@/theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Stack } from 'expo-router';
@@ -6,7 +7,7 @@ import { useEffect } from 'react';
 import { Appearance, useColorScheme } from 'react-native';
 
 export default function RootLayout() {
-  const { isSystemMode, setThemeBySystem } = useThemeStore();
+  const { isSystemMode, setThemeBySystem, themeColors } = useThemeStore();
   const systemTheme = useColorScheme();
 
   useEffect(() => {
@@ -23,5 +24,20 @@ export default function RootLayout() {
     return () => subscription.remove();
   }, [isSystemMode, setThemeBySystem, systemTheme]);
 
-  return <Stack />;
+  const styles = themeStyles(themeColors);
+
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        contentStyle: styles.layout,
+      }}
+    />
+  );
 }
+
+const themeStyles = createThemeStyles((colors) => ({
+  layout: {
+    backgroundColor: colors.bg,
+  },
+}));

@@ -1,4 +1,4 @@
-import { COLORS } from '@/shared/colors';
+import { COLORS, ColorsScheme } from '@/shared/styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Appearance } from 'react-native';
 import { create } from 'zustand';
@@ -11,7 +11,7 @@ type State = {
   isSystemMode: boolean;
   setTheme: (newMode: ThemeMode) => void;
   setThemeBySystem: (newMode: ThemeMode) => void;
-  themeColors: (typeof COLORS)['light'];
+  themeColors: ColorsScheme;
 };
 
 export const themeStore = create<State>()(
@@ -21,9 +21,11 @@ export const themeStore = create<State>()(
       mode: (Appearance.getColorScheme() as ThemeMode) || 'light',
       themeColors:
         Appearance.getColorScheme() === 'dark' ? COLORS.dark : COLORS.light,
-
       setTheme: (newMode: ThemeMode) => {
         const newColors = newMode === 'dark' ? COLORS.dark : COLORS.light;
+        if (newMode === get().mode) {
+          return;
+        }
         set({ mode: newMode, themeColors: newColors, isSystemMode: false });
       },
       setThemeBySystem: (newMode: ThemeMode) => {

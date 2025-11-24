@@ -1,5 +1,8 @@
-import React, { ReactNode } from 'react';
-import { Pressable, StyleSheet, ViewStyle } from 'react-native';
+import { createThemeStyles } from '@/shared/lib';
+import { styleVars } from '@/shared/styles';
+import { useThemeStore } from '@/theme';
+import React, { memo, ReactNode } from 'react';
+import { Pressable, ViewStyle } from 'react-native';
 
 type ButtonProps = {
   onPress: () => void;
@@ -14,36 +17,27 @@ const Button = ({
   disabled = false,
   style,
 }: ButtonProps) => {
+  const themeColors = useThemeStore((s) => s.themeColors);
+  const styles = themeStyles(themeColors);
   return (
     <Pressable
       onPress={disabled ? undefined : onPress}
-      style={[dynamicStyles.container, style]}
-      android_ripple={{ color: '#005BBB' }} // Ripple-эффект для Android
+      style={[styles.container, style]}
     >
       {children}
-      {/* {React.isValidElement(children) ? (
-        children // Если children - ReactNode (например, <T mess="key" />), рендерим как есть
-      ) : (
-        <Text style={[dynamicStyles.text, textStyle]}>{children}</Text> // Fallback для строк
-      )} */}
     </Pressable>
   );
 };
 
-export default Button;
+export default memo(Button);
 
-const dynamicStyles = StyleSheet.create({
+const themeStyles = createThemeStyles((colors) => ({
   container: {
-    backgroundColor: '#007AFF', // Синий для светлой, темный для темной
+    backgroundColor: colors.accent.main, // Синий для светлой, темный для темной
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 8,
+    borderRadius: styleVars.br.default,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
-    color: '#FFF', // Белый текст для контраста
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
+}));

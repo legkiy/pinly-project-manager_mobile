@@ -5,3 +5,5 @@ export const COLORS = {
   light,
   dark,
 };
+
+export type ColorsScheme = typeof COLORS.light;

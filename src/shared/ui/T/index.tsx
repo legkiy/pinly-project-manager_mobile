@@ -1,3 +1,5 @@
+import { createThemeStyles } from '@/shared/lib';
+import { useThemeStore } from '@/theme';
 import { useTranslation } from 'react-i18next';
 import { Text, TextProps } from 'react-native';
 type TProps = Omit<TextProps, 'children'> & {
@@ -6,6 +8,18 @@ type TProps = Omit<TextProps, 'children'> & {
 
 const T = ({ mess, ...props }: TProps) => {
   const { t } = useTranslation();
-  return <Text {...props}>{t(mess)}</Text>;
+  const themeColors = useThemeStore((s) => s.themeColors);
+  const styles = themeStyles(themeColors);
+  return (
+    <Text {...props} style={[styles.text, props.style]}>
+      {t(mess)}
+    </Text>
+  );
 };
 export default T;
+
+const themeStyles = createThemeStyles((colors) => ({
+  text: {
+    color: colors.text.main,
+  },
+}));
