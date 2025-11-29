@@ -1,5 +1,5 @@
 import { createThemeStyles } from '@/shared/lib';
-import { styleVars } from '@/shared/styles';
+import { STYLE_VARS } from '@/shared/styles';
 import { useThemeStore } from '@/theme';
 import React, { memo, ReactNode } from 'react';
 import { Pressable, ViewStyle } from 'react-native';
@@ -36,7 +36,7 @@ const themeStyles = createThemeStyles((colors) => ({
     backgroundColor: colors.accent.main, // Синий для светлой, темный для темной
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: styleVars.br.default,
+    borderRadius: STYLE_VARS.br.default,
     alignItems: 'center',
     justifyContent: 'center',
   },

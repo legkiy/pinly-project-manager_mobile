@@ -1,7 +1,8 @@
 import { light } from './light';
 
 export const dark: typeof light = {
-  bg: '#404040ff',
+  bg: '#2f2f2fff',
+  card: '#2f2f2fff',
   accent: {
     main: '#ca1212ff',
   },
