@@ -1,21 +1,23 @@
 import { createThemeStyles } from '@/shared/lib';
 import { STYLE_VARS } from '@/shared/styles';
-import { T } from '@/shared/ui';
-import { Link, LinkProps } from 'expo-router';
+import { NavigateLink, T } from '@/shared/ui';
+import { useNavigation } from 'expo-router';
 import { View } from 'react-native';
 
 type Props = {
-  backLink?: LinkProps['href'];
+  needBack?: boolean;
 };
 
-const Header = () => {
+const Header = ({ needBack }: Props) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.header}>
-      <Link href={{ pathname: '/' }}>
-        <T mess="Back" />
-      </Link>
-      <T mess="Header" />
-      <T mess="Settings" />
+      <View>
+        {needBack && <T mess="Back" onPress={() => navigation.goBack()} />}
+      </View>
+      <NavigateLink href={'/settings'}>
+        <T mess="Settings" />
+      </NavigateLink>
     </View>
   );
 };
@@ -26,5 +28,6 @@ const styles = createThemeStyles({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingInline: STYLE_VARS.spacing.default * 2,
+    paddingBottom: STYLE_VARS.spacing.default,
   },
 });

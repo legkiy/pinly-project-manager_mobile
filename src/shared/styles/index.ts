@@ -9,10 +9,13 @@ export const STYLE_VARS = {
   },
   shadow: {
     default: {
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.5,
-      shadowRadius: 4,
+      elevation: 4,
+      shadowColor: 'black',
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.2,
     },
   },
 };

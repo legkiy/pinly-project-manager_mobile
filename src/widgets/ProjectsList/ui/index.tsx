@@ -2,12 +2,12 @@ import { Project, ProjectCard } from '@/entities/Project';
 import { createThemeStyles } from '@/shared/lib';
 import { createMockArray } from '@/shared/lib/createMockArray';
 import { STYLE_VARS } from '@/shared/styles';
-// import * as Crypto from 'expo-crypto';
+import * as Crypto from 'expo-crypto';
 import { useState } from 'react';
 import { FlatList, View } from 'react-native';
 
 const mockProjects = createMockArray<Project>(5, (step) => ({
-  id: 'prject-' + step, // + Crypto.randomUUID(),
+  id: 'prject-' + Crypto.randomUUID(),
   title: 'Project ' + step,
   description: `<p>D ${step}</p>`,
   createdAt: new Date().toISOString(),
@@ -16,6 +16,7 @@ const mockProjects = createMockArray<Project>(5, (step) => ({
 }));
 const ProjectList = () => {
   const [projects, setProjects] = useState(mockProjects);
+
   return (
     <View>
       <FlatList
