@@ -21,7 +21,7 @@ const ProjectCard: FC<Props> = ({ title, description, id }) => {
   );
 };
 export default ProjectCard;
-const { width } = Dimensions.get('screen');
+const { width } = Dimensions.get('window');
 const cardMargin = STYLE_VARS.spacing.small;
 const cardWidth = width / 2 - cardMargin * 4;
 

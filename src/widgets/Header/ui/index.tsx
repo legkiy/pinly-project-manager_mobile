@@ -1,3 +1,4 @@
+import { ThemeToggle } from '@/features';
 import { createThemeStyles } from '@/shared/lib';
 import { STYLE_VARS } from '@/shared/styles';
 import { NavigateLink, T } from '@/shared/ui';
@@ -15,6 +16,7 @@ const Header = ({ needBack }: Props) => {
       <View>
         {needBack && <T mess="Back" onPress={() => navigation.goBack()} />}
       </View>
+      <ThemeToggle />
       <NavigateLink href={'/settings'}>
         <T mess="Settings" />
       </NavigateLink>

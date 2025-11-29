@@ -2,7 +2,7 @@ export const light = {
   bg: '#fff',
   card: '#fff',
   accent: {
-    main: '#ca1212ff',
+    main: '#ff0000ff',
   },
   text: {
     main: '#111111ff1',

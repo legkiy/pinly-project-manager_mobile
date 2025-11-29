@@ -33,9 +33,9 @@ export default memo(Button);
 
 const themeStyles = createThemeStyles((colors) => ({
   container: {
-    backgroundColor: colors.accent.main, // Синий для светлой, темный для темной
-    paddingVertical: 12,
-    paddingHorizontal: 24,
+    backgroundColor: colors.accent.main,
+    paddingVertical: STYLE_VARS.spacing.small,
+    paddingHorizontal: STYLE_VARS.spacing.small,
     borderRadius: STYLE_VARS.br.default,
     alignItems: 'center',
     justifyContent: 'center',
